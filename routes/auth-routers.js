@@ -9,7 +9,11 @@ const registerAndLoginSchema = validateBody(userSchemas.registerAndLoginSchema);
 
 authRouter.post("/register", registerAndLoginSchema, authControler.signup);
 authRouter.post("/login", registerAndLoginSchema, authControler.signin);
-authRouter.get("/current", authenticate, authControler.getCurrent);
 authRouter.post("/logout", authenticate, authControler.signout);
+
+// authRouter.putch("/avatars", authenticate, authControler.updateAvatar);
+authRouter.get("/current", authenticate, authControler.getCurrent);
+// authRouter.putch("/", authenticate, authControler.updateProfil);
+
 
 export default authRouter;

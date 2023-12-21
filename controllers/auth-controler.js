@@ -53,20 +53,22 @@ const signin = async (req, res, next) => {
   });
 };
 
-const getCurrent = async (req, res) => {
-  const { subscription, email } = req.user;
-  res.json({
-    email,
-    subscription,
-  });
-};
-
 const signout = async (req, res) => {
   const { _id } = req.user;
   await User.findByIdAndUpdate(_id, { token: "" });
   res.status(204).json();
 };
 
+const getCurrent = async (req, res) => {
+  const { userName, email, avatarURL, gender, waterRate } = req.user;
+  res.json({
+    email,
+    userName,
+    avatarURL, 
+    gender,
+    waterRate
+  });
+};
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
