@@ -18,7 +18,7 @@
     ],
     "servers": [
         {
-            "url": "https://water-tracker-backend.onrender.com"
+            "url": "https://db-water-tracker.onrender.com/"
         }
     ],
     "tags": [
