@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { HttpError, sendEmail } from "../helpers/index.js";
+import { HttpError} from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 import { nanoid } from "nanoid";
 
@@ -22,12 +22,12 @@ const signup = async (req, res) => {
     password: hashPassword,
     verificationToken,
   });
-  const verifyEmail = {
-    to: email,
-    subject: "Verifycation your email in Aplication RETURN BOX",
-    html: `<div><a target ="_blank" Href= "${BASE_URL}/users/verify/${verificationToken}">Verification your Email</a></div>`,
-  };
-  await sendEmail(verifyEmail);
+  // const verifyEmail = {
+  //   to: email,
+  //   subject: "Verifycation your email in Aplication RETURN BOX",
+  //   html: `<div><a target ="_blank" Href= "${BASE_URL}/users/verify/${verificationToken}">Verification your Email</a></div>`,
+  // };
+  // await sendEmail(verifyEmail);
   res.status(201).json({
     email: newUser.email,
   });
@@ -39,9 +39,9 @@ const signin = async (req, res, next) => {
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
-  if (!user.verify) {
-    throw HttpError(404, "User not found");
-  }
+  // if (!user.verify) {
+  //   throw HttpError(404, "User not found");
+  // }
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password is wrong");
@@ -56,7 +56,7 @@ const signin = async (req, res, next) => {
     token,
     user: {
       email: user.email,
-      subscription: user.subscription,
+      // subscription: user.subscription,
     },
   });
 };
@@ -86,12 +86,12 @@ const resendVerify = async (req, res, next) => {
   if (user.verify) {
     throw HttpError(400, "Verification has already been passed");
   }
-  const verifyEmail = {
-    to: email,
-    subject: "Verifycation your email in Aplication RETURN BOX",
-    html: `<a target ="_blank" Href= "${BASE_URL}/users/verify/${user.verificationToken}">Verification your Email</a>`,
-  };
-  await sendEmail(verifyEmail);
+  // const verifyEmail = {
+  //   to: email,
+  //   subject: "Verifycation your email in Aplication RETURN BOX",
+  //   html: `<a target ="_blank" Href= "${BASE_URL}/users/verify/${user.verificationToken}">Verification your Email</a>`,
+  // };
+  // await sendEmail(verifyEmail);
   res.json({
     message: "Verification email sent",
   });
