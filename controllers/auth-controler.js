@@ -1,7 +1,7 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { HttpError} from "../helpers/index.js";
+import { HttpError } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 import { nanoid } from "nanoid";
 
@@ -22,7 +22,7 @@ const signup = async (req, res) => {
     password: hashPassword,
     verificationToken,
   });
- 
+
   res.status(201).json({
     email: newUser.email,
   });
@@ -34,7 +34,7 @@ const signin = async (req, res, next) => {
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
- 
+
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password is wrong");
@@ -64,9 +64,9 @@ const getCurrent = async (req, res) => {
   res.json({
     email,
     userName,
-    avatarURL, 
+    avatarURL,
     gender,
-    waterRate
+    waterRate,
   });
 };
 export default {
