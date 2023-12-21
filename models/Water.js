@@ -5,7 +5,5 @@ import Joi from "joi";
 // const waterSchema = new Schema({});
 
 export const waterRateSchema = Joi.object({
-  waterRate: Joi.number().integer().max(15000).required().message({
-    "any.required": "missing required waterRate field",
-  }),
+  waterRate: Joi.number().integer().max(15000).required(),
 });
