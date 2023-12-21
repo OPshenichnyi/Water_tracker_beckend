@@ -23,6 +23,23 @@ const userSchema = new Schema(
       type: String,
       required: [true, "Password is required"],
     },
+    userName: {
+      type: String,
+      default: "",
+    },
+    avatarURL: {
+      type: String,
+      default: "",
+    },
+    gender: {
+      type: String,
+      enum: ["man", "woman"],
+      default: "man",
+    },
+    waterRate: {
+      type: Number,
+      default: 2000,
+    },
     token: String,
   },
   { versionKey: false, timestamps: true }
@@ -30,6 +47,7 @@ const userSchema = new Schema(
 userSchema.post("save", handleSaveError);
 userSchema.pre("findOneAndUpdate", preUpdate);
 userSchema.post("findOneAndUpdate", handleSaveError);
+
 const User = model("user", userSchema);
 
 export default User;
@@ -42,5 +60,6 @@ export const registerAndLoginSchema = Joi.object({
     "any.required": "missing required email field",
   }),
   password: Joi.string().min(8).max(48).required(), 
+  gender: Joi.string().valid("man", "qirl").default("man"),
 });
 
