@@ -1,5 +1,5 @@
 import express from "express";
-import { authenticate, isEmptyBody } from "../middlewares/index.js";
+import { authenticate, isValidId } from "../middlewares/index.js";
 import * as waterSchemas from "../models/Water.js";
 import * as userSchemas from "../models/User.js";
 import { validateBody } from "../decorators/index.js";
@@ -12,33 +12,22 @@ const updateWaterVolumeSchema = validateBody(
   waterSchemas.updateWaterVolumeSchema
 );
 
-waterRouter.patch(
-  "/water-rate",
-  authenticate,
-  isEmptyBody,
-  waterRateSchema,
-  waterControler.waterRate
-);
+waterRouter.use(authenticate);
 
-waterRouter.post(
-  "/water",
-  authenticate,
-  isEmptyBody,
-  addWaterSchema,
-  waterControler.addWaterVolume
-);
+waterRouter.patch("/water-rate", waterRateSchema, waterControler.waterRate);
+
+waterRouter.post("/water", addWaterSchema, waterControler.addWaterVolume);
 
 waterRouter.patch(
   "/water/:waterId/water-volume",
-  authenticate,
-  isEmptyBody,
+  isValidId,
   updateWaterVolumeSchema,
   waterControler.updateWaterVolume
 );
 
 waterRouter.delete(
   "/water/:waterId",
-  authenticate,
+  isValidId,
   waterControler.deleteWaterVolume
 );
 
