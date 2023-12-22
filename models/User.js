@@ -59,7 +59,10 @@ export const registerAndLoginSchema = Joi.object({
   email: Joi.string().pattern(emailRegexp).required().messages({
     "any.required": "missing required email field",
   }),
-  password: Joi.string().min(8).max(48).required(), 
+  password: Joi.string().min(8).max(48).required(),
   gender: Joi.string().valid("man", "qirl").default("man"),
 });
 
+export const waterRateSchema = Joi.object({
+  waterRate: Joi.number().integer().max(15000).required(),
+});
