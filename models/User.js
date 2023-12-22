@@ -29,7 +29,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      default: "V",
+      default: "",
     },
     gender: {
       type: String,
@@ -63,3 +63,12 @@ export const registerAndLoginSchema = Joi.object({
   gender: Joi.string().valid("man", "qirl").default("man"),
 });
 
+export const updateProfilSchema = Joi.object({
+  userName: Joi.string(),
+  email: Joi.string().pattern(emailRegexp),
+  password: Joi.string().min(8).max(48),
+  gender: Joi.string().valid("man", "qirl"),
+  oldPassword: Joi.string(),
+  newPassword: Joi.string().min(8).max(48), 
+  confirmNewPassword: Joi.string().min(8).max(48),
+});

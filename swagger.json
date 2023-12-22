@@ -48,7 +48,7 @@
         }
     ],
     "paths": {
-        "/api/auth/signup": {
+        "/auth/register": {
             "post": {
                 "tags": [
                     "Auth"
@@ -88,7 +88,7 @@
                 }
             }
         },
-        "/api/auth/signin": {
+        "/auth/login": {
             "post": {
                 "tags": [
                     "Auth"
@@ -128,7 +128,7 @@
                 }
             }
         },
-        "/api/auth/logout": {
+        "/auth/logout": {
             "post": {
                 "tags": [
                     "Auth"
@@ -152,7 +152,7 @@
                 }
             }
         },
-        "/api/auth/reset-password": {
+        "/auth/reset-password": {
             "post": {
                 "tags": [
                     "Auth"
@@ -192,7 +192,7 @@
                 }
             }
         },
-        "/api/users/avatars": {
+        "/users/avatars": {
             "patch": {
                 "tags": [
                     "User"
@@ -237,7 +237,7 @@
                 }
             }
         },
-        "/api/users/current": {
+        "/users/current": {
             "get": {
                 "tags": [
                     "User"
@@ -267,7 +267,7 @@
                 }
             }
         },
-        "/api/users/": {
+        "/users/": {
             "patch": {
                 "tags": [
                     "User"
