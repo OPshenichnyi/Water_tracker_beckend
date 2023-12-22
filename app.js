@@ -19,7 +19,6 @@ app.use("/users", authRouter);
 app.use("/api", waterRouter);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
-
 app.use((req, res) => {
   res.status(404).json({ message: "Not found path" });
 });
