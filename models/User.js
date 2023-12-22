@@ -29,7 +29,7 @@ const userSchema = new Schema(
     },
     avatarURL: {
       type: String,
-      default: "",
+      default: "V",
     },
     gender: {
       type: String,
