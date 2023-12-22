@@ -1,6 +1,5 @@
 import { Schema, model } from "mongoose";
 import Joi from "joi";
-import JoiDateFactory from "@joi/date";
 import { handleSaveError, preUpdate } from "./hooks.js";
 
 // MONGOSE SCHEMA
