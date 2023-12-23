@@ -12,6 +12,7 @@ const waterSchema = new Schema(
     date: {
       type: Date,
       required: [true, "Must be data and time"],
+      // default: Date.now,
     },
     owner: {
       type: String,

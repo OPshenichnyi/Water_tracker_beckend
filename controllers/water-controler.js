@@ -47,9 +47,57 @@ const deleteWaterVolume = async (req, res) => {
   res.json({ message: "Delete success" });
 };
 
+const dailyWaterConsumption = async (req, res) =>{
+  const { _id: owner } = req.user;
+
+  const currentDate = new Date();
+  const startDate = new Date(currentDate.getFullYear(), currentDate.getMonth(), currentDate.getDate());
+  const endDate = new Date(startDate);
+  endDate.setDate(endDate.getDate() + 1);
+ 
+  const totalWaterConsumption = await Water.aggregate([
+    {
+      $match: {
+        owner,
+        date: { $gte: startDate, $lt: endDate },
+      },
+    },
+    {
+      $group: {
+        _id: null,
+        totalWaterVolume: { $sum: "$waterVolume" },
+      },
+    },
+  ]);
+
+  const waterRecords = await Water.find({
+    owner,
+    date: { $gte: startDate, $lt: endDate },
+  });
+  
+  const dailyTotal = waterRecords.reduce((total, record) => total + record.waterVolume, 0);
+  
+  const user = await User.findOne({ _id: owner });
+  if (!user) {
+    throw HttpError(401, "User not found");
+  }
+
+  const waterRate = user.waterRate || 0;
+
+  const percentage = waterRate > 0 ? Math.min(Math.round((dailyTotal / waterRate) * 100), 100) : 0;
+
+  res.json({
+    percentage,
+    dailyTotal,
+    waterRate,
+    waterRecords,
+  });
+}
+
 export default {
   waterRate: ctrlWrapper(waterRate),
   addWaterVolume: ctrlWrapper(addWaterVolume),
   updateWaterVolume: ctrlWrapper(updateWaterVolume),
   deleteWaterVolume: ctrlWrapper(deleteWaterVolume),
+  dailyWaterConsumption: ctrlWrapper(dailyWaterConsumption)
 };
