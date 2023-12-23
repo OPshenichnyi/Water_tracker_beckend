@@ -31,4 +31,6 @@ waterRouter.delete(
   waterControler.deleteWaterVolume
 );
 
+waterRouter.get("/month", waterControler.getWaterVolume);
+
 export default waterRouter;
