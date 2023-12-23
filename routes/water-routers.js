@@ -11,6 +11,9 @@ const addWaterSchema = validateBody(waterSchemas.addWaterVolumeSchema);
 const updateWaterVolumeSchema = validateBody(
   waterSchemas.updateWaterVolumeSchema
 );
+const getWaterVolumeSchema = validateBody(
+  waterSchemas.getWaterVolumeMonthSchema
+);
 
 waterRouter.use(authenticate);
 
@@ -31,6 +34,6 @@ waterRouter.delete(
   waterControler.deleteWaterVolume
 );
 
-waterRouter.get("/month", waterControler.getWaterVolume);
+waterRouter.get("/month", getWaterVolumeSchema, waterControler.getWaterVolume);
 
 export default waterRouter;

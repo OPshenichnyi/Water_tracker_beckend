@@ -1,9 +1,8 @@
-import { HttpError } from "../helpers/index.js";
+import { HttpError, getPointsMonth } from "../helpers/index.js";
 import ctrlWrapper from "../decorators/ctrlWrapper.js";
 import User from "../models/User.js";
 import Water from "../models/Water.js";
 import { now } from "mongoose";
-import getPointsMonth from "../helpers/getPointsSearchMonth.js";
 
 const waterRate = async (req, res) => {
   const { _id } = req.user;
@@ -32,6 +31,7 @@ const updateWaterVolume = async (req, res) => {
     { _id: waterId, owner },
     req.body
   );
+
   if (!result) {
     throw HttpError(404, "Not found");
   }
@@ -51,64 +51,64 @@ const deleteWaterVolume = async (req, res) => {
 
 const getWaterVolume = async (req, res) => {
   const { date } = req.body;
-
-  getPointsMonth("2023-12-23");
-
-  const { _id } = req.user;
-
-  const waterRate = 11000;
-
-  //   const result = await Water.aggregate([
-  //     {
-  //       // Фільтрує документи за двома критеріями
-  //       $match: {
-  //         date: { $gt: prev, $lt: next },
-  //         // Вибирає документ який попадає у діапазон між початковою prev датою та кінцевою next
-  //         owner: { $eq: _id },
-  //         // Вибираємо документи де поле owner
-  //       },
-  //     },
-  //     {
-  //       $group: {
-  //         // Групує документи по даті
-  //         _id: {
-  //           //_id форматується до рядкового представлення  дати за допомогою  dateToString
-  //           $dateToString: {
-  //             date: "$date",
-  //             format: "%Y-%m-%d",
-  //           },
-  //         },
-  //         // Сумує дані по унікальній даті в totalWaterVolume
-  //         totalWaterVolume: { $sum: "$waterVolume" },
-  //         // Показує кількість водних порцій
-  //         waterServings: { $count: {} },
-  //       },
-  //     },
-  //     {
-  //       // Формує кінцевий вид документа
-  //       $project: {
-  //         _id: 0, // Користувача
-  //         day: "$_id", // Дата
-  //         waterPercentage: {
-  //           // Вираховуємо процене споживання води
-  //           $round: [
-  //             {
-  //               $multiply: [{ $divide: ["$totalWaterVolume", waterRate] }, 100],
-  //             },
-  //             0,
-  //           ],
-  //         },
-  //         //Розраховує щоденну норму споживання води,
-  //         //waterRate ділить на 1000 і округляє до одного десяткового знаку.
-  //         dayliWaterRate: {
-  //           $round: [{ $divide: [waterRate, 1000] }, 1],
-  //         },
-  //         // waterServings: Показує кількість водних порцій.
-  //         waterServings: "$waterServings",
-  //       },
-  //     },
-  //   ]);
-  //   console.log(result);
+  const { _id: owner } = req.user;
+  const _id = owner.toString();
+  const { waterRate } = await User.findOne({ _id });
+  const { fromDateFind, toDateFind } = getPointsMonth(date);
+  const result = await Water.aggregate([
+    {
+      // Фільтрує документи за двома критеріями
+      $match: {
+        date: { $gt: fromDateFind, $lt: toDateFind },
+        // Вибирає документ який попадає у діапазон між початковою prev датою та кінцевою next
+        owner: { $eq: _id },
+        // Вибираємо документи де поле owner
+      },
+    },
+    {
+      $group: {
+        // Групує документи по даті
+        _id: {
+          //_id форматується до рядкового представлення  дати за допомогою  dateToString
+          $dateToString: {
+            date: "$date",
+            format: "%Y-%m-%d",
+          },
+        },
+        // Сумує дані по унікальній даті в totalWaterVolume
+        totalWaterVolume: { $sum: "$waterVolume" },
+        // Показує кількість водних порцій
+        waterServings: { $count: {} },
+      },
+    },
+    {
+      // Формує кінцевий вид документа
+      $project: {
+        _id: 0, // Користувача
+        date: "$_id", // Дата
+        dailyNormFulfillment: {
+          // Вираховуємо процене споживання води
+          $round: [
+            {
+              $multiply: [{ $divide: ["$totalWaterVolume", waterRate] }, 100],
+            },
+            0,
+          ],
+        },
+        //Розраховує щоденну норму споживання води,
+        //waterRate ділить на 1000 і округляє до одного десяткового знаку.
+        WaterRate: {
+          $round: [{ $divide: [waterRate, 1000] }, 1],
+        },
+        // waterServings: Показує кількість водних порцій.
+        servingOfWater: "$waterServings",
+      },
+    },
+  ]);
+  if (result.length === 0) {
+    throw HttpError(404, "Not found");
+  }
+  res.status(200).json({ result });
 };
 
 export default {
