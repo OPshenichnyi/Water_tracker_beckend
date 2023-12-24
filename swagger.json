@@ -18,7 +18,7 @@
     ],
     "servers": [
         {
-            "url": "https://db-water-tracker.onrender.com/"
+            "url": "https://ter-tracker.onrender.com/"
         }
     ],
     "tags": [
@@ -28,20 +28,12 @@
             "description": "User profile  and Authorization endpoints"
         },
         {
-            "name": "WaterRate",
-            "description": "User water rate endpoints"
-        },
-        {
             "name": "Water",
             "description": "Water endpoint for adding, editing and deleting information about water input "
         },
         {
-            "name": "Today",
+            "name": "DataUser",
             "description": "Endpoint for getting list of water consume and percentage of daily norma for today "
-        },
-        {
-            "name": "Month",
-            "description": "Endpoint for getting information of water consumption for the collected month "
         }
     ],
     "paths": {
@@ -270,10 +262,10 @@
                 }
             }
         },
-        "/api/water-rate/": {
+        "/users/water-rate/": {
             "patch": {
                 "tags": [
-                    "WaterRate"
+                    "User"
                 ],
                 "summary": "Change user's water rate",
                 "parameters": [],
@@ -360,7 +352,7 @@
                 }
             }
         },
-        "/api/water/{id}": {
+        "/api/water/{waterId}": {
             "delete": {
                 "tags": [
                     "Water"
@@ -389,7 +381,7 @@
                         "content": {}
                     },
                     "404": {
-                        "description": "Card with ${id} is not found",
+                        "description": "${waterId} is not valid id",
                         "content": {}
                     },
                     "401": {
@@ -399,7 +391,7 @@
                 }
             }
         },
-        "/api/water/{id}/waterVolume": {
+        "/api/water/{waterId}/waterVolume": {
             "patch": {
                 "tags": [
                     "Water"
@@ -444,7 +436,7 @@
                         }
                     },
                     "404": {
-                        "description": "Card with ${id} is not found",
+                        "description": " ${waterId} is not valid id",
                         "content": {}
                     },
                     "401": {
@@ -457,7 +449,7 @@
         "/api/today/": {
             "get": {
                 "tags": [
-                    "Today"
+                    "DataUser"
                 ],
                 "summary": "Get list of water consume and percentage of daily norma of User for today",
                 "parameters": [],
@@ -485,10 +477,10 @@
                 }
             }
         },
-        "/api/month/{monthNumber} ": {
+        "/api/month/ ": {
             "get": {
                 "tags": [
-                    "Month"
+                    "DataUser"
                 ],
                 "summary": "Get list of water consume and percentage of daily norma of User for today",
                 "parameters": [
@@ -509,7 +501,17 @@
                         "Bearer": []
                     }
                 ],
-                "requestBody": {},
+                "requestBody": {
+                    "description": "Search by calendar date.",
+                    "required": true,
+                    "content": {
+                        "application/json": {
+                            "schema": {
+                                "$ref": "#/components/schemas/InputRequestDate"
+                            }
+                        }
+                    }
+                },
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
@@ -522,7 +524,7 @@
                         }
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Email not found",
                         "content": {}
                     }
                 }
@@ -625,7 +627,7 @@
                     "waterRate": {
                         "type": "integer",
                         "description": "User's water rate",
-                        "example": 1500
+                        "example": 1900
                     }
                 }
             },
@@ -776,7 +778,7 @@
                     "waterRate": {
                         "type": "integer",
                         "description": "User's water rate",
-                        "example": 1500
+                        "example": 1900
                     }
                 }
             },
@@ -847,7 +849,23 @@
                     }
                 },
                 "example": {
-                    "waterVolume": 900,
+                    "waterVolume": 200,
+                    "date": "2023-11-14T17:06:57.705Z"
+                }
+            },
+            "InputRequestDate": {
+                "type": "object",
+                "required": [
+                    "waterVolume",
+                    "date"
+                ],
+                "properties": {
+                    "date": {
+                        "type": "string",
+                        "description": "time of water input"
+                    }
+                },
+                "example": {
                     "date": "2023-11-14T17:06:57.705Z"
                 }
             },
@@ -872,10 +890,10 @@
                     }
                 },
                 "example": {
-                    "waterVolume": 900,
+                    "_id": "6588ac91c9e7c8a7af506c9f",
+                    "waterVolume": 200,
                     "date": "2023-11-14T17:06:57.705Z",
-                    "owner": "654f6747c4faaae3bc1857f1",
-                    "_id": "6553d1774cfd0635de52d96b"
+                    "owner": "6588882ebc0985138ad2af71"
                 }
             },
             "GetStatisticsForToday": {
@@ -962,16 +980,16 @@
                 },
                 "example": [
                     {
-                        "date": "1, November",
-                        "waterRate": 2,
-                        "dailyNormFulfillment": 43,
-                        "servingOfWater": 4
+                        "date": "2023-12-23",
+                        "dailyNormFulfillment": 30,
+                        "WaterRate": 2,
+                        "servingOfWater": 1
                     },
                     {
-                        "date": "12, November",
-                        "waterRate": 2,
-                        "dailyNormFulfillment": 50,
-                        "servingOfWater": 4
+                        "date": "2023-12-24",
+                        "dailyNormFulfillment": 90,
+                        "WaterRate": 2,
+                        "servingOfWater": 3
                     }
                 ]
             }

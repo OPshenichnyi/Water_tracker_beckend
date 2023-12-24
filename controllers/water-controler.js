@@ -6,13 +6,18 @@ import { now } from "mongoose";
 
 const waterRate = async (req, res) => {
   const { _id } = req.user;
+
   const { waterRate } = req.body;
+ 
   const user = await User.findOne({ _id });
   if (!user) {
     throw HttpError(401, "Email not found");
   }
+  if (!waterRate || waterRate==={}) {
+    throw HttpError(400, "Email not found");
+  }
   await User.findByIdAndUpdate(_id, { waterRate });
-  res.status(201).json({
+  res.status(200, "New water rate value").json({
     waterRate,
   });
 };
@@ -21,7 +26,7 @@ const addWaterVolume = async (req, res) => {
   const { _id: owner } = req.user;
   const result = await Water.create({ ...req.body, owner });
   const { waterVolume, date, _id } = result;
-  res.status(201).json({ _id, date, owner, waterVolume });
+  res.status(201, "Input Successfully added").json({ _id, date, owner, waterVolume });
 };
 
 const updateWaterVolume = async (req, res) => {
@@ -46,7 +51,7 @@ const deleteWaterVolume = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.json({ message: "Delete success" });
+  res.status(201, "Delete success").json({ message: "Delete success" });
 };
 
 const dailyWaterConsumption = async (req, res) => {
@@ -165,7 +170,7 @@ const getWaterVolume = async (req, res) => {
   if (result.length === 0) {
     throw HttpError(404, "Not found");
   }
-  res.status(200).json({ result });
+  res.status(200, "Successfull operation").json({ result });
 };
 
 export default {
