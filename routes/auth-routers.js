@@ -18,9 +18,5 @@ authRouter.get("/current", authenticate, authControler.getCurrent);
 authRouter.patch("/", authenticate, updateProfilSchema, authControler.updateProfil);
 
 authRouter.patch("/water-rate", waterRateSchema, authControler.waterRate);
-<<<<<<< Updated upstream
-=======
-
->>>>>>> Stashed changes
 
 export default authRouter;
