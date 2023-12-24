@@ -3,7 +3,7 @@ import * as userSchemas from "../models/User.js";
 import { validateBody } from "../decorators/index.js";
 import authControler from "../controllers/auth-controler.js";
 import { authenticate, upload } from "../middlewares/index.js";
-import waterControler from "../controllers/water-controler.js";
+// import waterControler from "../controllers/water-controler.js";
 const authRouter = express.Router();
 const registerAndLoginSchema = validateBody(userSchemas.registerAndLoginSchema);
 const updateProfilSchema = validateBody(userSchemas.updateProfilSchema);
