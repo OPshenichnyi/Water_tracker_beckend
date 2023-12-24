@@ -2,6 +2,8 @@ import { Schema, model } from "mongoose";
 import Joi from "joi";
 import { handleSaveError, preUpdate } from "./hooks.js";
 
+const monthRegEx = /^\d{4}-\d{2}(?:-\d{2}(?:T\d{2}:\d{2}:\d{2}\.\d{3}\+\d{2}:\d{2})?)?$/;
+
 // MONGOSE SCHEMA
 const waterSchema = new Schema(
   {
@@ -30,7 +32,6 @@ const Water = model("water", waterSchema);
 export default Water;
 
 // JOI SCHEMA
-// const schemaDate = JoiDateFactory.date().format("YYYY-MM-DD").utc();
 
 export const addWaterVolumeSchema = Joi.object({
   waterVolume: Joi.number().integer().max(5000).required(),
@@ -40,4 +41,12 @@ export const addWaterVolumeSchema = Joi.object({
 export const updateWaterVolumeSchema = Joi.object({
   waterVolume: Joi.number().integer().max(5000),
   date: Joi.date().iso(),
+});
+
+export const getWaterVolumeMonthSchema = Joi.object({
+  date: Joi.string().pattern(monthRegEx).required().messages({
+    "string.empty": "Date field cannot be empty",
+    "string.pattern.base": "Date must be in YYYY-MM format",
+    "any.required": "Date field is required",
+  }),
 });
