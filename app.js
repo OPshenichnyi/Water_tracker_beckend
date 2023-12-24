@@ -7,8 +7,9 @@ import cors from "cors";
 import authRouter from "./routes/auth-routers.js";
 import waterRouter from "./routes/water-routers.js";
 import swaggerUI from "swagger-ui-express";
-import swaggerDocument from "./swagger.json" assert {type: "json"};
+import { readFile } from "fs/promises";
 
+const swaggerDocument = JSON.parse(await readFile("./swagger.json"));
 const app = express();
 
 const formatsLogger = app.get("env") === "development" ? "dev" : "short";
@@ -24,7 +25,7 @@ app.use((req, res) => {
 });
 
 app.use((err, req, res, next) => {
-  console.log(err)
+  console.log(err);
   res.status(err.status || 500).json({ message: err.message });
 });
 export default app;
