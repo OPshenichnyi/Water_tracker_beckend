@@ -22,13 +22,10 @@
         }
     ],
     "tags": [
-        {
-            "name": "Auth",
-            "description": "Authorization endpoints"
-        },
+
         {
             "name": "User",
-            "description": "User profile endpoints"
+            "description": "User profile  and Authorization endpoints"
         },
         {
             "name": "WaterRate",
@@ -48,10 +45,10 @@
         }
     ],
     "paths": {
-        "/auth/register": {
+        "/users/register": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "User"
                 ],
                 "summary": "Sign up new user - User registration",
                 "parameters": [],
@@ -82,16 +79,16 @@
                         "content": {}
                     },
                     "409": {
-                        "description": "Email in use",
+                        "description": "Email already exist",
                         "content": {}
                     }
                 }
             }
         },
-        "/auth/login": {
+        "/users/login": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "User"
                 ],
                 "summary": "Sign in existing user",
                 "parameters": [],
@@ -128,10 +125,10 @@
                 }
             }
         },
-        "/auth/logout": {
+        "/users/logout": {
             "post": {
                 "tags": [
-                    "Auth"
+                    "User"
                 ],
                 "summary": "User log out",
                 "parameters": [],
@@ -147,46 +144,6 @@
                     },
                     "401": {
                         "description": "Not authorized",
-                        "content": {}
-                    }
-                }
-            }
-        },
-        "/auth/reset-password": {
-            "post": {
-                "tags": [
-                    "Auth"
-                ],
-                "summary": "Reset user's password",
-                "parameters": [],
-                "requestBody": {
-                    "description": "User's email",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/AuthResetPasswordRequest"
-                            }
-                        }
-                    }
-                },
-                "responses": {
-                    "200": {
-                        "description": "Success message",
-                        "content": {
-                            "application/json": {
-                                "schema": {
-                                    "$ref": "#/components/schemas/AuthResetPasswordResponse"
-                                }
-                            }
-                        }
-                    },
-                    "400": {
-                        "description": "Validation error",
-                        "content": {}
-                    },
-                    "404": {
-                        "description": "Email not found",
                         "content": {}
                     }
                 }
@@ -306,7 +263,7 @@
                         "content": {}
                     },
                     "401": {
-                        "description": "Not authorized, wrong old password",
+                        "description": "Old password is incorrect",
                         "content": {}
                     }
                 }
@@ -521,7 +478,7 @@
                         }
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "User not found",
                         "content": {}
                     }
                 }
@@ -583,12 +540,13 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "format": "email",
+                        "example": "User@gmail.com"
                     },
                     "password": {
                         "type": "string",
                         "description": "User's password",
-                        "example": "qwertY123!"
+                        "example": "qazWsx12"
                     }
                 }
             },
@@ -624,31 +582,36 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "example": "User@gmail.com"
                     },
                     "userName": {
                         "type": "string",
                         "description": "User's name",
-                        "example": "David"
+                        "example": "Nik"
                     },
                     "gender": {
                         "type": "string",
                         "description": "User's gender",
-                        "example": "male",
+                        "example": "man",
                         "enum": [
-                            "male",
-                            "female"
+                            "man",
+                            "girl"
                         ]
                     },
                     "oldPassword": {
                         "type": "string",
                         "description": "Old user's password",
-                        "example": "qwertY123!"
+                        "example": "qazWsx12"
                     },
                     "newPassword": {
                         "type": "string",
                         "description": "New user's password",
-                        "example": "qwertY123+"
+                        "example": "qazWsx123"
+                    },
+                    "confirmNewPassword": {
+                        "type": "string",
+                        "description": "Confirm new user's password",
+                        "example": "qazWsx123"
                     }
                 }
             },
@@ -671,7 +634,8 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "format": "email",
+                        "example": "User@gmail.com"
                     },
                     "userName": {
                         "type": "string",
@@ -686,16 +650,21 @@
                     "gender": {
                         "type": "string",
                         "description": "User's gender",
-                        "example": "female",
+                        "example": "man",
                         "enum": [
-                            "male",
-                            "female"
+                            "man",
+                            "girl"
                         ]
                     },
                     "waterRate": {
                         "type": "integer",
                         "description": "User's daily water rate",
                         "example": "2000"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODY5YzQ3YmRkMTVhMTg0ZTU0NjQxZSIsImlhdCI6MTcwMzMyMDY0OSwiZXhwIjoxNzAzNDA3MDQ5fQ.oJnhuBn0QoriX-ZUNJSHBdNHTvsQso7IQyAnAzjaV04"
                     }
                 }
             },
@@ -705,42 +674,42 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "example": "User@gmail.com"
                     },
                     "userName": {
                         "type": "string",
                         "description": "User's name",
-                        "example": "David"
+                        "example": "Nik"
                     },
                     "avatarURL": {
                         "type": "string",
                         "description": "User's avatar",
-                        "example": "http://res.cloudinary.com/asdvsfs/image/upload/v1745783123/avatars/214d37639e15fd1ac2e9a53c_avatar.jpg"
+                        "example": "https://res.cloudinary.com/djkfbggvo/image/upload/v1703404979/u5icpavsmtvlq64fiyxv.jpg"
                     },
                     "gender": {
                         "type": "string",
                         "description": "User's gender",
-                        "example": "male",
+                        "example": "man",
                         "enum": [
-                            "male",
-                            "female"
+                            "man",
+                            "girl"
                         ]
                     },
                     "waterRate": {
                         "type": "integer",
                         "description": "User's daily water rate",
-                        "example": "1500"
+                        "example": "2500"
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODY5YzQ3YmRkMTVhMTg0ZTU0NjQxZSIsImlhdCI6MTcwMzMyMDY0OSwiZXhwIjoxNzAzNDA3MDQ5fQ.oJnhuBn0QoriX-ZUNJSHBdNHTvsQso7IQyAnAzjaV04"
                     }
                 }
             },
             "UserInfoWithTokenSingupResponse": {
                 "type": "object",
                 "properties": {
-                    "token": {
-                        "type": "string",
-                        "description": "Bearer token",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiIyOWI4ZmZmNS0xN2NjLTQ5NTYtOTViZC1jN2U3N2FkZDEwOWEiLCJpYXQiOjE2ODE4OTM3MzEsImV4cCI6MTAwMDAwMDE2ODE4OTM3MzJ9.hQpNKIj4SR7Gm9waUMn7hzwKQyqwKrniL_qSW7SxrjM"
-                    },
                     "user": {
                         "$ref": "#/components/schemas/UserInfoDefaultResponse"
                     }
@@ -749,13 +718,10 @@
             "UserInfoWithTokenSinginResponse": {
                 "type": "object",
                 "properties": {
-                    "token": {
-                        "type": "string",
-                        "description": "Bearer token",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJzaWQiOiIyOWI4ZmZmNS0xN2NjLTQ5NTYtOTViZC1jN2U3N2FkZDEwOWEiLCJpYXQiOjE2ODE4OTM3MzEsImV4cCI6MTAwMDAwMDE2ODE4OTM3MzJ9.hQpNKIj4SR7Gm9waUMn7hzwKQyqwKrniL_qSW7SxrjM"
-                    },
+
                     "user": {
                         "$ref": "#/components/schemas/UserInfoResponse"
+                        
                     }
                 }
             },
@@ -775,7 +741,7 @@
                     "avatarURL": {
                         "type": "string",
                         "description": "Avatar's URL",
-                        "example": "http://res.cloudinary.com/asdvsfs/image/upload/v1745783123/avatars/214d37639e15fd1ac2e9a53c_avatar.jpg"
+                        "example": "https://res.cloudinary.com/djkfbggvo/image/upload/v1703404979/u5icpavsmtvlq64fiyxv.jpg"
                     }
                 }
             },
@@ -785,12 +751,12 @@
                     "email": {
                         "type": "string",
                         "description": "User's email",
-                        "format": "email"
+                        "example": "User@gmail.com"
                     },
                     "userName": {
                         "type": "string",
                         "description": "User's name",
-                        "example": "David"
+                        "example": "Nik"
                     },
                     "gender": {
                         "type": "string",
@@ -913,8 +879,20 @@
             },
             "GetStatisticsForToday": {
                 "type": "object",
-                "properties": {
-                    "waterInputsForToday": {
+                "properties": {                    
+                "percentage": {
+                    "type": "integer",
+                    "description": "Percentage of daily water rate fulfillment."
+                },
+                "dailyTotal": {
+                    "type": "integer",
+                    "description": "Drank water per day."
+                },
+                "waterRate": {
+                    "type": "integer",
+                    "description": "Required amount of water per day."
+                },
+                    "waterRecords": {
                         "type": "array",
                         "description": "All inputs of the water per current day",
                         "items": {
@@ -938,22 +916,24 @@
                                 }
                             }
                         }
-                    },
-                    "dailyNormFulfillment": {
-                        "type": "integer",
-                        "description": "Percentage of daily water rate fulfillment."
                     }
+
                 },
                 "example": {
-                    "waterInputsForToday": [
+                    "percentage": 60,
+                    "dailyTotal":1200,
+                    "waterRate":2000,
+                    "waterRecords": [
                         {
-                            "_id": "65548f162e039b83aff62cd4",
-                            "waterVolume": 1000,
-                            "date": "2023-11-15T17:06:57.705Z",
-                            "owner": "654f6747c4faaae3bc1857f1"
+                            "_id": "65880146dda4349579270cef",
+                            "waterVolume": 200,
+                            "date": "2023-12-24T11:33:57.705Z",
+                            "owner": "6587e58dcb3dfb3a121e30f4",
+                            "createdAt":"2023-12-24T10:00:38.880Z",
+                            "updatedAt":"2023-12-24T10:00:38.880Z"
                         }
-                    ],
-                    "dailyNormFulfillment": 50
+                    ]
+                    
                 }
             },
             "GetStatisticsForMonth": {

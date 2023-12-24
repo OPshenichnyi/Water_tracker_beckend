@@ -31,7 +31,6 @@ waterRouter.delete(
   waterControler.deleteWaterVolume
 );
 
-
 waterRouter.get( "/today",  waterControler.dailyWaterConsumption)
 
 export default waterRouter;
