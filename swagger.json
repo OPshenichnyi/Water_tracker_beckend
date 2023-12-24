@@ -33,7 +33,11 @@
         },
         {
             "name": "DataUser",
+<<<<<<< Updated upstream
             "description": "Endpoint for getting list of water consume and percentage of daily norma for today "
+=======
+            "description": "Water consumption data for today and water consumption data for the month "
+>>>>>>> Stashed changes
         }
     ],
     "paths": {
@@ -301,7 +305,7 @@
                         "content": {}
                     },
                     "401": {
-                        "description": "Not authorized",
+                        "description": "Email not found",
                         "content": {}
                     }
                 }
@@ -376,12 +380,16 @@
                 ],
                 "requestBody": {},
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Delete success",
                         "content": {}
                     },
                     "404": {
+<<<<<<< Updated upstream
                         "description": "${waterId} is not valid id",
+=======
+                        "description": "Not found",
+>>>>>>> Stashed changes
                         "content": {}
                     },
                     "401": {
@@ -436,7 +444,11 @@
                         }
                     },
                     "404": {
+<<<<<<< Updated upstream
                         "description": " ${waterId} is not valid id",
+=======
+                        "description": "Not found",
+>>>>>>> Stashed changes
                         "content": {}
                     },
                     "401": {
@@ -778,7 +790,11 @@
                     "waterRate": {
                         "type": "integer",
                         "description": "User's water rate",
+<<<<<<< Updated upstream
                         "example": 1900
+=======
+                        "example": 1800
+>>>>>>> Stashed changes
                     }
                 }
             },
@@ -848,6 +864,7 @@
                         "description": "time of water input"
                     }
                 },
+<<<<<<< Updated upstream
                 "example": {
                     "waterVolume": 200,
                     "date": "2023-11-14T17:06:57.705Z"
@@ -867,11 +884,20 @@
                 },
                 "example": {
                     "date": "2023-11-14T17:06:57.705Z"
+=======
+                "example": {                    
+                    "date": "2023-11-14T17:06:57.705Z",
+                    "waterVolume": 900
+>>>>>>> Stashed changes
                 }
             },
             "InputResponse": {
                 "type": "object",
                 "properties": {
+                    "_id": {
+                        "type": "string",
+                        "description": "ID of water input records"
+                    },
                     "waterVolume": {
                         "type": "integer",
                         "description": "The portion of water consumed in a single entry."
@@ -883,17 +909,22 @@
                     "owner": {
                         "type": "string",
                         "description": "User'd ID"
-                    },
-                    "_id": {
-                        "type": "string",
-                        "description": "ID of water input records"
                     }
+
                 },
                 "example": {
+<<<<<<< Updated upstream
                     "_id": "6588ac91c9e7c8a7af506c9f",
                     "waterVolume": 200,
                     "date": "2023-11-14T17:06:57.705Z",
                     "owner": "6588882ebc0985138ad2af71"
+=======
+                    "_id": "65886da5d4ab9261e648e775",  
+                    "waterVolume": 300,                  
+                    "date": "2023-12-23T17:33:57.705Z",
+                    "owner": "658863b96dececba531c5fb1"
+                    
+>>>>>>> Stashed changes
                 }
             },
             "GetStatisticsForToday": {
