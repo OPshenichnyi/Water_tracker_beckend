@@ -4,23 +4,6 @@ import User from "../models/User.js";
 import Water from "../models/Water.js";
 import { now } from "mongoose";
 
-const waterRate = async (req, res) => {
-  const { _id } = req.user;
-
-  const { waterRate } = req.body;
- 
-  const user = await User.findOne({ _id });
-  if (!user) {
-    throw HttpError(401, "Email not found");
-  }
-  if (!waterRate || waterRate==={}) {
-    throw HttpError(400, "Email not found");
-  }
-  await User.findByIdAndUpdate(_id, { waterRate });
-  res.status(200, "New water rate value").json({
-    waterRate,
-  });
-};
 
 const addWaterVolume = async (req, res) => {
   const { _id: owner } = req.user;
@@ -174,7 +157,6 @@ const getWaterVolume = async (req, res) => {
 };
 
 export default {
-  waterRate: ctrlWrapper(waterRate),
   addWaterVolume: ctrlWrapper(addWaterVolume),
   updateWaterVolume: ctrlWrapper(updateWaterVolume),
   deleteWaterVolume: ctrlWrapper(deleteWaterVolume),
