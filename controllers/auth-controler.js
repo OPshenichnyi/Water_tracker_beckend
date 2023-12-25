@@ -28,7 +28,14 @@ const signup = async (req, res) => {
   });
  
   res.status(201).json({
-    email: newUser.email,
+    user: {
+      email: newUser.email,
+      userName: newUser.userName,
+      avatarURL: newUser.avatarURL,
+      gender: newUser.gender,
+      waterRate: newUser.waterRate,
+      token: newUser.token,
+    },
   });
 };
 
@@ -61,9 +68,13 @@ const signin = async (req, res, next) => {
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
   await User.findByIdAndUpdate(user._id, { token });
   res.json({
-    token,
     user: {
       email: user.email,
+      userName: user.userName,
+      avatarURL: user.avatarURL,
+      gender: user.gender,
+      waterRate: user.waterRate,
+      token,
     },
   });
 };
