@@ -151,6 +151,21 @@ const updateProfil = async (req, res) => {
   res.json(updatedUser);
 }
 
+const waterRate = async (req, res) => {
+  const { _id } = req.user;
+  const { waterRate } = req.body;
+  const user = await User.findOne({ _id });
+  if (!user) {
+    throw HttpError(401, "Email not found");
+  }
+
+  await User.findByIdAndUpdate(_id, { waterRate });
+  res.status(200, "New water rate value").json({
+
+    waterRate,
+  });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
@@ -158,5 +173,6 @@ export default {
   updateAvatar: ctrlWrapper(updateAvatar),
   getCurrent: ctrlWrapper(getCurrent),
   updateProfil: ctrlWrapper(updateProfil),
+  waterRate: ctrlWrapper(waterRate)
 };
 

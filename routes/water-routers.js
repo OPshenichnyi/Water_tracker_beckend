@@ -4,6 +4,7 @@ import * as waterSchemas from "../models/Water.js";
 import * as userSchemas from "../models/User.js";
 import { validateBody } from "../decorators/index.js";
 import waterControler from "../controllers/water-controler.js";
+import authControler from "../controllers/auth-controler.js";
 
 const waterRouter = express.Router();
 const waterRateSchema = validateBody(userSchemas.waterRateSchema);
@@ -17,7 +18,7 @@ const getWaterVolumeSchema = validateBody(
 
 waterRouter.use(authenticate);
 
-waterRouter.patch("/water-rate", waterRateSchema, waterControler.waterRate);
+waterRouter.patch("/water-rate", waterRateSchema, authControler.waterRate);
 
 waterRouter.post("/water", addWaterSchema, waterControler.addWaterVolume);
 
@@ -33,7 +34,6 @@ waterRouter.delete(
   isValidId,
   waterControler.deleteWaterVolume
 );
-
 
 waterRouter.get("/month", getWaterVolumeSchema, waterControler.getWaterVolume);
 waterRouter.get("/today", waterControler.dailyWaterConsumption);
