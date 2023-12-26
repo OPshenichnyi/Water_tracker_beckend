@@ -665,11 +665,6 @@
                         "type": "integer",
                         "description": "User's daily water rate",
                         "example": "2000"
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "Bearer token",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODY5YzQ3YmRkMTVhMTg0ZTU0NjQxZSIsImlhdCI6MTcwMzMyMDY0OSwiZXhwIjoxNzAzNDA3MDQ5fQ.oJnhuBn0QoriX-ZUNJSHBdNHTvsQso7IQyAnAzjaV04"
                     }
                 }
             },
@@ -704,11 +699,6 @@
                         "type": "integer",
                         "description": "User's daily water rate",
                         "example": "2500"
-                    },
-                    "token": {
-                        "type": "string",
-                        "description": "Bearer token",
-                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODY5YzQ3YmRkMTVhMTg0ZTU0NjQxZSIsImlhdCI6MTcwMzMyMDY0OSwiZXhwIjoxNzAzNDA3MDQ5fQ.oJnhuBn0QoriX-ZUNJSHBdNHTvsQso7IQyAnAzjaV04"
                     }
                 }
             },
@@ -727,6 +717,11 @@
                     "user": {
                         "$ref": "#/components/schemas/UserInfoResponse"
                         
+                    },
+                    "token": {
+                        "type": "string",
+                        "description": "Bearer token",
+                        "example": "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjY1ODY5YzQ3YmRkMTVhMTg0ZTU0NjQxZSIsImlhdCI6MTcwMzMyMDY0OSwiZXhwIjoxNzAzNDA3MDQ5fQ.oJnhuBn0QoriX-ZUNJSHBdNHTvsQso7IQyAnAzjaV04"
                     }
                 }
             },
