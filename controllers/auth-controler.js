@@ -34,7 +34,6 @@ const signup = async (req, res) => {
       avatarURL: newUser.avatarURL,
       gender: newUser.gender,
       waterRate: newUser.waterRate,
-      token: newUser.token,
     },
   });
 };
@@ -73,9 +72,9 @@ const signin = async (req, res, next) => {
       userName: user.userName,
       avatarURL: user.avatarURL,
       gender: user.gender,
-      waterRate: user.waterRate,
-      token,
+      waterRate: user.waterRate,      
     },
+    token,
   });
 };
 
@@ -186,4 +185,3 @@ export default {
   updateProfil: ctrlWrapper(updateProfil),
   waterRate: ctrlWrapper(waterRate)
 };
-
