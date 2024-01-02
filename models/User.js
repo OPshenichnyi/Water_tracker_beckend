@@ -60,7 +60,7 @@ export const registerAndLoginSchema = Joi.object({
     "any.required": "missing required email field",
   }),
   password: Joi.string().min(8).max(48).required(),
-  gender: Joi.string().valid("man", "qirl").default("man"),
+  gender: Joi.string().valid("man", "woman").default("man"),
 });
 
 
@@ -68,7 +68,7 @@ export const updateProfilSchema = Joi.object({
   userName: Joi.string(),
   email: Joi.string().pattern(emailRegexp),
   password: Joi.string().min(8).max(48),
-  gender: Joi.string().valid("man", "qirl"),
+  gender: Joi.string().valid("man", "woman"),
   oldPassword: Joi.string(),
   newPassword: Joi.string().min(8).max(48), 
   confirmNewPassword: Joi.string().min(8).max(48),
