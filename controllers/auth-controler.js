@@ -93,6 +93,9 @@ const updateAvatar = async (req, res) => {
  
   const fileData = await cloudinary.uploader.upload(req.file.path, {
      floader: "posters",
+     width: 400,
+     height: 400,
+     crop: "fill",
   })
 
   fs.unlink(req.file.path, (err) => {
