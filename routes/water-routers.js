@@ -30,8 +30,8 @@ waterRouter.delete(
   waterControler.deleteWaterVolume
 );
 
-waterRouter.get("/month", getWaterVolumeSchema, waterControler.getWaterVolume);
-waterRouter.get("/today", waterControler.dailyWaterConsumption);
+waterRouter.get("/month/:date", waterControler.getWaterVolume);
 
+waterRouter.get("/today", waterControler.dailyWaterConsumption);
 
 export default waterRouter;
