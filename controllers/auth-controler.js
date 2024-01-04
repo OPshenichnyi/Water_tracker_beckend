@@ -28,7 +28,13 @@ const signup = async (req, res) => {
   });
  
   res.status(201).json({
-    email: newUser.email,
+    user: {
+      email: newUser.email,
+      userName: newUser.userName,
+      avatarURL: newUser.avatarURL,
+      gender: newUser.gender,
+      waterRate: newUser.waterRate,
+    },
   });
 };
 
@@ -61,10 +67,14 @@ const signin = async (req, res, next) => {
   const token = jwt.sign(payload, JWT_SECRET, { expiresIn: "24h" });
   await User.findByIdAndUpdate(user._id, { token });
   res.json({
-    token,
     user: {
       email: user.email,
+      userName: user.userName,
+      avatarURL: user.avatarURL,
+      gender: user.gender,
+      waterRate: user.waterRate,      
     },
+    token,
   });
 };
 
@@ -83,6 +93,9 @@ const updateAvatar = async (req, res) => {
  
   const fileData = await cloudinary.uploader.upload(req.file.path, {
      floader: "posters",
+     width: 400,
+     height: 400,
+     crop: "fill",
   })
 
   fs.unlink(req.file.path, (err) => {
@@ -151,6 +164,21 @@ const updateProfil = async (req, res) => {
   res.json(updatedUser);
 }
 
+const waterRate = async (req, res) => {
+  const { _id } = req.user;
+  const { waterRate } = req.body;
+  const user = await User.findOne({ _id });
+  if (!user) {
+    throw HttpError(401, "Email not found");
+  }
+
+  await User.findByIdAndUpdate(_id, { waterRate });
+  res.status(200, "New water rate value").json({
+
+    waterRate,
+  });
+};
+
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
@@ -158,5 +186,5 @@ export default {
   updateAvatar: ctrlWrapper(updateAvatar),
   getCurrent: ctrlWrapper(getCurrent),
   updateProfil: ctrlWrapper(updateProfil),
+  waterRate: ctrlWrapper(waterRate)
 };
-
