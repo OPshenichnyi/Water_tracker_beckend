@@ -107,7 +107,7 @@ const dailyWaterConsumption = async (req, res) => {
 };
 
 const getWaterVolume = async (req, res) => {
-  const { date } = req.body;
+  const { date } = req.params;
   const { _id: owner } = req.user;
   const _id = owner.toString();
   const { waterRate } = await User.findOne({ _id });
