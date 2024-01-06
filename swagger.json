@@ -18,7 +18,7 @@
     ],
     "servers": [
         {
-            "url": "https://ter-tracker.onrender.com/"
+            "url": "https://db-water-tracker.onrender.com/"
         }
     ],
     "tags": [
@@ -37,7 +37,7 @@
         }
     ],
     "paths": {
-        "/users/register": {
+        "/api/users/register": {
             "post": {
                 "tags": [
                     "User"
@@ -77,7 +77,7 @@
                 }
             }
         },
-        "/users/login": {
+        "/api/users/login": {
             "post": {
                 "tags": [
                     "User"
@@ -117,7 +117,7 @@
                 }
             }
         },
-        "/users/logout": {
+        "/api/users/logout": {
             "post": {
                 "tags": [
                     "User"
@@ -142,7 +142,7 @@
             }
         },
 
-        "/users/avatars": {
+        "/api/users/avatars": {
             "patch": {
                 "tags": [
                     "User"
@@ -187,7 +187,7 @@
                 }
             }
         },
-        "/users/current": {
+        "/api/users/current": {
             "get": {
                 "tags": [
                     "User"
@@ -217,7 +217,7 @@
                 }
             }
         },
-        "/users/": {
+        "/api/users/": {
             "patch": {
                 "tags": [
                     "User"
@@ -262,7 +262,7 @@
                 }
             }
         },
-        "/users/water-rate/": {
+        "/api/users/water-rate/": {
             "patch": {
                 "tags": [
                     "User"
