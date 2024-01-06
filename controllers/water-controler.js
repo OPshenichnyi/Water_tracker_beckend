@@ -151,7 +151,7 @@ const getWaterVolume = async (req, res) => {
     },
   ]);
   if (result.length === 0) {
-    throw HttpError(404, "Not found");
+    return res.status(200).json({ result: [] });
   }
   res.status(200, "Successfull operation").json({ result });
 };

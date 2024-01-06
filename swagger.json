@@ -18,7 +18,7 @@
     ],
     "servers": [
         {
-            "url": "https://db-water-tracker.onrender.com/"
+            "url": "https://db-water-tracker.onrender.com"
         }
     ],
     "tags": [
@@ -479,7 +479,7 @@
                 }
             }
         },
-        "/api/month/ ": {
+        "/api/month/{date} ": {
             "get": {
                 "tags": [
                     "DataUser"
