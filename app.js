@@ -16,7 +16,7 @@ const formatsLogger = app.get("env") === "development" ? "dev" : "short";
 app.use(logger(formatsLogger));
 app.use(cors());
 app.use(express.json());
-app.use("/users", authRouter);
+app.use("/api/users", authRouter);
 app.use("/api", waterRouter);
 app.use("/api-docs", swaggerUI.serve, swaggerUI.setup(swaggerDocument));
 
