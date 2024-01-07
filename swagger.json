@@ -126,7 +126,7 @@
                 "parameters": [],
                 "security": [
                     {
-                        "Bearer": []
+                       "Bearer": []
                     }
                 ],
                 "responses": {
@@ -997,7 +997,7 @@
             }
         },
         "securitySchemes": {
-            "bearerAuth": {
+            "Bearer": {
                 "type": "http",
                 "scheme": "bearer",
                 "bearerFormat": "JWT"
