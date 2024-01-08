@@ -360,7 +360,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "waterId",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -373,7 +373,6 @@
                         "Bearer": []
                     }
                 ],
-                "requestBody": {},
                 "responses": {
                     "200": {
                         "description": "Delete success",
@@ -390,7 +389,7 @@
                 }
             }
         },
-        "/api/water/{waterId}/waterVolume": {
+        "/api/water/{waterId}/water-volume": {
             "patch": {
                 "tags": [
                     "Water"
@@ -399,7 +398,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "_id",
+                        "name": "waterId",
                         "required": true,
                         "schema": {
                             "type": "string"

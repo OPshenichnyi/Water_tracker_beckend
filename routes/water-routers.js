@@ -17,20 +17,11 @@ waterRouter.use(authenticate);
 
 waterRouter.post("/water", addWaterSchema, waterControler.addWaterVolume);
 
-waterRouter.patch(
-  "/water/:waterId/water-volume",
-  isValidId,
-  updateWaterVolumeSchema,
-  waterControler.updateWaterVolume
-);
+waterRouter.patch("/water/:waterId/water-volume", isValidId, updateWaterVolumeSchema, waterControler.updateWaterVolume);
 
-waterRouter.delete(
-  "/water/:waterId",
-  isValidId,
-  waterControler.deleteWaterVolume
-);
+waterRouter.delete("/water/:waterId", isValidId, waterControler.deleteWaterVolume);
 
-waterRouter.get("/month/:date", waterControler.getWaterVolume);
+waterRouter.get("/month/:date",getWaterVolumeSchema, waterControler.getWaterVolume);
 
 waterRouter.get("/today", waterControler.dailyWaterConsumption);
 
