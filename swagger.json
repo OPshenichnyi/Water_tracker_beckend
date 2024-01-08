@@ -141,7 +141,6 @@
                 }
             }
         },
-
         "/api/users/avatars": {
             "patch": {
                 "tags": [
@@ -381,9 +380,7 @@
                         "content": {}
                     },
                     "404": {
-
-                        "description": "${waterId} is not valid id",
-
+                        "description": "Provided ID is not valid",
                         "content": {}
                     },
                     "401": {
@@ -402,7 +399,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "_id",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -503,17 +500,7 @@
                         "Bearer": []
                     }
                 ],
-                "requestBody": {
-                    "description": "Search by calendar date.",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InputRequestDate"
-                            }
-                        }
-                    }
-                },
+
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
@@ -851,23 +838,7 @@
                     "date": "2023-11-14T17:06:57.705Z"
                 }
             },
-            "InputRequestDate": {
-                "type": "object",
-                "required": [
-                    "waterVolume",
-                    "date"
-                ],
-                "properties": {
-                    "date": {
-                        "type": "string",
-                        "description": "time of water input"
-                    }
-                },
-                "example": {
-                    "date": "2023-11-14T17:06:57.705Z"
 
-                }
-            },
             "InputResponse": {
                 "type": "object",
                 "properties": {
