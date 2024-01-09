@@ -562,7 +562,7 @@
                 "properties": {
                     "avatarURL": {
                         "type": "string",
-                        "description": "File of avatar",
+                        "description": "File of avatarURL",
                         "format": "binary"
                     }
                 }

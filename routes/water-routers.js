@@ -9,9 +9,7 @@ const addWaterSchema = validateBody(waterSchemas.addWaterVolumeSchema);
 const updateWaterVolumeSchema = validateBody(
   waterSchemas.updateWaterVolumeSchema
 );
-const getWaterVolumeSchema = validateBody(
-  waterSchemas.getWaterVolumeMonthSchema
-);
+// const getWaterVolumeSchema = waterSchemas.getWaterVolumeMonthSchema;
 
 waterRouter.use(authenticate);
 

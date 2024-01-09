@@ -44,9 +44,5 @@ export const updateWaterVolumeSchema = Joi.object({
 });
 
 export const getWaterVolumeMonthSchema = Joi.object({
-  date: Joi.string().pattern(monthRegEx).required().messages({
-    "string.empty": "Date field cannot be empty",
-    "string.pattern.base": "Date must be in YYYY-MM format",
-    "any.required": "Date field is required",
-  }),
+  date: Joi.string().required()
 });
