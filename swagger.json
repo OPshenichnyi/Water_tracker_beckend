@@ -598,11 +598,6 @@
                         "type": "string",
                         "description": "New user's password",
                         "example": "qazWsx123"
-                    },
-                    "confirmNewPassword": {
-                        "type": "string",
-                        "description": "Confirm new user's password",
-                        "example": "qazWsx123"
                     }
                 }
             },
@@ -747,11 +742,21 @@
                     "gender": {
                         "type": "string",
                         "description": "User's gender",
-                        "example": "male",
+                        "example": "man",
                         "enum": [
-                            "male",
-                            "female"
+                            "man",
+                            "girl"
                         ]
+                    },
+                    "createdAt": {
+                        "type": "string",
+                        "description": "created at",
+                        "example": "2024-01-09T14:21:47.211Z"
+                    },
+                    "updatedAt": {
+                        "type": "string",
+                        "description": "created at",
+                        "example": "2024-01-09T17:37:21.124Z"
                     }
                 }
             },
