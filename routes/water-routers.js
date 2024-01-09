@@ -21,7 +21,7 @@ waterRouter.patch("/water/:waterId/water-volume", isValidId, updateWaterVolumeSc
 
 waterRouter.delete("/water/:waterId", isValidId, waterControler.deleteWaterVolume);
 
-waterRouter.get("/month/:date",getWaterVolumeSchema, waterControler.getWaterVolume);
+waterRouter.get("/month/:date", waterControler.getWaterVolume);
 
 waterRouter.get("/today", waterControler.dailyWaterConsumption);
 
