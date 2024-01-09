@@ -484,14 +484,14 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "monthNumber",
+                        "name": "date",
                         "required": true,
                         "schema": {
-                            "type": "integer"
+                            "type": "string",
+                            "pattern": "^\\d{4}-(0[1-9]|1[0-2])$"
                         },
-                        "description": "Month number for which information is requested",
-                        "minimum": 1,
-                        "maximum": 12
+                        "description": "Enter the date in the format 2024-01"
+                
                     }
                 ],
                 "security": [
