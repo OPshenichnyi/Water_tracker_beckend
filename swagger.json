@@ -423,7 +423,7 @@
                     }
                 },
                 "responses": {
-                    "201": {
+                    "200": {
                         "description": "Input Successfully changed",
                         "content": {
                             "application/json": {
