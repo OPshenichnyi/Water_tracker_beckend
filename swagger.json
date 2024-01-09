@@ -141,7 +141,6 @@
                 }
             }
         },
-
         "/api/users/avatars": {
             "patch": {
                 "tags": [
@@ -361,7 +360,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "waterId",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -374,16 +373,13 @@
                         "Bearer": []
                     }
                 ],
-                "requestBody": {},
                 "responses": {
                     "200": {
                         "description": "Delete success",
                         "content": {}
                     },
                     "404": {
-
-                        "description": "${waterId} is not valid id",
-
+                        "description": "Provided ID is not valid",
                         "content": {}
                     },
                     "401": {
@@ -393,7 +389,7 @@
                 }
             }
         },
-        "/api/water/{waterId}/waterVolume": {
+        "/api/water/{waterId}/water-volume": {
             "patch": {
                 "tags": [
                     "Water"
@@ -402,7 +398,7 @@
                 "parameters": [
                     {
                         "in": "path",
-                        "name": "id",
+                        "name": "waterId",
                         "required": true,
                         "schema": {
                             "type": "string"
@@ -503,17 +499,7 @@
                         "Bearer": []
                     }
                 ],
-                "requestBody": {
-                    "description": "Search by calendar date.",
-                    "required": true,
-                    "content": {
-                        "application/json": {
-                            "schema": {
-                                "$ref": "#/components/schemas/InputRequestDate"
-                            }
-                        }
-                    }
-                },
+
                 "responses": {
                     "200": {
                         "description": "Successfull operation",
@@ -851,23 +837,7 @@
                     "date": "2023-11-14T17:06:57.705Z"
                 }
             },
-            "InputRequestDate": {
-                "type": "object",
-                "required": [
-                    "waterVolume",
-                    "date"
-                ],
-                "properties": {
-                    "date": {
-                        "type": "string",
-                        "description": "time of water input"
-                    }
-                },
-                "example": {
-                    "date": "2023-11-14T17:06:57.705Z"
 
-                }
-            },
             "InputResponse": {
                 "type": "object",
                 "properties": {
