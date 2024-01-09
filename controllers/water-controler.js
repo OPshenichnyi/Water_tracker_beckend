@@ -24,7 +24,7 @@ const updateWaterVolume = async (req, res) => {
     throw HttpError(404, "Not found");
   }
   const { _id, waterVolume, date } = result;
-  res.status(201).json({ _id, waterVolume, date, owner });
+  res.status(200).json({ _id, waterVolume, date, owner });
 };
 
 const deleteWaterVolume = async (req, res) => {
@@ -34,7 +34,7 @@ const deleteWaterVolume = async (req, res) => {
   if (!result) {
     throw HttpError(404, "Not found");
   }
-  res.status(201, "Delete success").json({ message: "Delete success" });
+  res.status(200, "Delete success").json({ message: "Delete success" });
 };
 
 const dailyWaterConsumption = async (req, res) => {
