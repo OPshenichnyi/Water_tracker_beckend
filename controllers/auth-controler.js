@@ -165,45 +165,7 @@ const updateProfil = async (req, res) => {
   };
   res.json(responseUser);
 };
-// const updateProfil = async (req, res) => {
-//   const { _id } = req.user;
-//   const { userName, gender, email, oldPassword , newPassword, confirmNewPassword } = req.body;
 
-//   const user = await User.findById(_id);
-
-//   if (!user) {
-//     return res.status(404).json({ error: "User not found" });
-//   }
-
-//   if (oldPassword) {
-//     const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
-//     if (!isPasswordValid) {
-//       return res.status(401).json({ error: "Old password is incorrect" });
-//     }
-//   }
-
-//   const updatedFields = {};
-//   if ( email) {
-//     updatedFields.email = email;
-//   }
-//   if (userName) {
-//     updatedFields.userName = userName;
-//   }
-//   if (gender) {
-//     updatedFields.gender = gender;
-//   }
-//   if (newPassword !== confirmNewPassword) {
-//     return res.status(400).json({ error: "New password and confirm password do not match" });
-//   }
-//   if (newPassword) {
-//     const hashPassword = await bcrypt.hash(newPassword, 10);
-//     updatedFields.password = hashPassword;
-//   }
-
-//   const updatedUser = await User.findByIdAndUpdate(_id, updatedFields, { new: true });
-
-//   res.json(updatedUser);
-// }
 const waterRate = async (req, res) => {
   const { _id } = req.user;
   const { waterRate } = req.body;
