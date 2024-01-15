@@ -1,13 +1,13 @@
 import bcrypt from "bcryptjs";
 import jwt from "jsonwebtoken";
 import User from "../models/User.js";
-import { HttpError, cloudinary} from "../helpers/index.js";
+import { HttpError, cloudinary } from "../helpers/index.js";
 import { ctrlWrapper } from "../decorators/index.js";
 import { nanoid } from "nanoid";
 import fs from "fs";
-import path from 'path';
+import path from "path";
 
-const avatarsDir = path.resolve("public", "avatars")
+const avatarsDir = path.resolve("public", "avatars");
 
 const { JWT_SECRET, BASE_URL } = process.env;
 
@@ -26,7 +26,7 @@ const signup = async (req, res) => {
     password: hashPassword,
     verificationToken,
   });
- 
+
   res.status(201).json({
     user: {
       email: newUser.email,
@@ -44,18 +44,17 @@ const signin = async (req, res, next) => {
   if (!user) {
     throw HttpError(401, "Email or password is wrong");
   }
- 
+
   const passwordCompare = await bcrypt.compare(password, user.password);
   if (!passwordCompare) {
     throw HttpError(401, "Email or password is wrong");
   }
 
-
-  if (user.avatarURL === "" ) {
+  if (user.avatarURL === "") {
     const userName = user.userName;
     const avatarLetter = userName.charAt(0).toUpperCase();
 
-    const avatarURL = `${avatarLetter}`; 
+    const avatarURL = `${avatarLetter}`;
 
     await User.findByIdAndUpdate(user._id, { avatarURL });
   }
@@ -72,7 +71,7 @@ const signin = async (req, res, next) => {
       userName: user.userName,
       avatarURL: user.avatarURL,
       gender: user.gender,
-      waterRate: user.waterRate,      
+      waterRate: user.waterRate,
     },
     token,
   });
@@ -85,54 +84,54 @@ const signout = async (req, res) => {
 };
 
 const updateAvatar = async (req, res) => {
-  const {_id} = req.user
+  const { _id } = req.user;
 
   if (!req.file) {
-      throw HttpError(400, 'File not found, File extention not allow');
+    throw HttpError(400, "File not found, File extention not allow");
   }
- 
+
   const fileData = await cloudinary.uploader.upload(req.file.path, {
-     floader: "posters",
-     width: 400,
-     height: 400,
-     crop: "fill",
-  })
+    floader: "posters",
+    width: 400,
+    height: 400,
+    crop: "fill",
+  });
 
   fs.unlink(req.file.path, (err) => {
     if (err) {
-        console.error(`Error deleting file: ${err}`);
+      console.error(`Error deleting file: ${err}`);
     }
   });
 
   const avatarURL = fileData.secure_url;
-  await User.findByIdAndUpdate(_id, {avatarURL} )
+  await User.findByIdAndUpdate(_id, { avatarURL });
 
   res.json({
-      avatarURL,
-  })
-}
+    avatarURL,
+  });
+};
 
 const getCurrent = async (req, res) => {
   const { userName, email, avatarURL, gender, waterRate } = req.user;
   res.json({
     email,
     userName,
-    avatarURL, 
+    avatarURL,
     gender,
-    waterRate
+    waterRate,
   });
 };
 
 const updateProfil = async (req, res) => {
   const { _id } = req.user;
-  const { userName, gender, email, oldPassword , newPassword } = req.body;
+  const { userName, gender, email, oldPassword, newPassword } = req.body;
 
   const user = await User.findById(_id);
 
   if (!user) {
     return res.status(404).json({ error: "User not found" });
   }
-  
+
   if (oldPassword) {
     const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
     if (!isPasswordValid) {
@@ -141,7 +140,7 @@ const updateProfil = async (req, res) => {
   }
 
   const updatedFields = {};
-  if ( email && email !== user.email) {
+  if (email && email !== user.email) {
     updatedFields.email = email;
   }
   if (userName && userName !== user.userName) {
@@ -156,17 +155,16 @@ const updateProfil = async (req, res) => {
     updatedFields.password = hashPassword;
   }
 
-
- await User.findByIdAndUpdate(_id, updatedFields, { new: true });
- const responseUser = {
-  email: updatedFields.email || user.email,
-  userName: updatedFields.userName || user.userName,
-  gender: updatedFields.gender || user.gender,
-  createdAt: user.createdAt,
-  updatedAt: user.updatedAt,
-};
+  await User.findByIdAndUpdate(_id, updatedFields, { new: true });
+  const responseUser = {
+    email: updatedFields.email || user.email,
+    userName: updatedFields.userName || user.userName,
+    gender: updatedFields.gender || user.gender,
+    createdAt: user.createdAt,
+    updatedAt: user.updatedAt,
+  };
   res.json(responseUser);
-}
+};
 // const updateProfil = async (req, res) => {
 //   const { _id } = req.user;
 //   const { userName, gender, email, oldPassword , newPassword, confirmNewPassword } = req.body;
@@ -176,7 +174,7 @@ const updateProfil = async (req, res) => {
 //   if (!user) {
 //     return res.status(404).json({ error: "User not found" });
 //   }
-  
+
 //   if (oldPassword) {
 //     const isPasswordValid = await bcrypt.compare(oldPassword, user.password);
 //     if (!isPasswordValid) {
@@ -202,7 +200,6 @@ const updateProfil = async (req, res) => {
 //     updatedFields.password = hashPassword;
 //   }
 
-
 //   const updatedUser = await User.findByIdAndUpdate(_id, updatedFields, { new: true });
 
 //   res.json(updatedUser);
@@ -217,11 +214,13 @@ const waterRate = async (req, res) => {
 
   await User.findByIdAndUpdate(_id, { waterRate });
   res.status(200, "New water rate value").json({
-
     waterRate,
   });
 };
 
+const dontSleep = async (req, res) => {
+  res.status(200, "I dont sleep").json({ sleep: "I dont sleep" });
+};
 export default {
   signup: ctrlWrapper(signup),
   signin: ctrlWrapper(signin),
@@ -229,5 +228,6 @@ export default {
   updateAvatar: ctrlWrapper(updateAvatar),
   getCurrent: ctrlWrapper(getCurrent),
   updateProfil: ctrlWrapper(updateProfil),
-  waterRate: ctrlWrapper(waterRate)
+  waterRate: ctrlWrapper(waterRate),
+  dontSleep: ctrlWrapper(dontSleep),
 };
